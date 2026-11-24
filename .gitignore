@@ -1,0 +1,28 @@
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+.RDataTmp
+
+# User-specific files
+.Ruserdata
+
+# RStudio files
+.Rproj.user/
+
+# Knitr and R Markdown cache & intermediate files
+*_cache/
+*.knit.md
+*.utf8.md
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# Temporary files
+scratch/
+tmp/

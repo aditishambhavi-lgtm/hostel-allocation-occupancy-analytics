@@ -1,0 +1,202 @@
+---
+title: "HostelIQ: Smart Hostel Allocation and Occupancy Analytics"
+subtitle: "B.Tech DSC3132 Business Analytics Project | Predictive Analytics & Capacity Planning"
+author: "Aditi Shambhavi"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  fig.align = "center"
+)
+```
+
+# Project Overview & Executive Summary
+
+## Context & Theme
+This project, titled **HostelIQ: Smart Hostel Allocation and Occupancy Analytics**, addresses **Theme CAM-07 (Hostel Allocation and Occupancy Planning)** for the B.Tech DSC3132 Business Analytics curriculum.
+
+Residential campus infrastructure represents one of the largest capital and operational commitments in higher education. Mismatches between student housing demand and available physical bed supply create severe operational bottlenecks:
+- **Under-allocation / Capacity Deficits:** Leads to prolonged waitlists, student dissatisfaction, and emergency off-campus leasing.
+- **Over-allocation / Unoccupied Buffers:** Leads to unamortized capital expenses and wasteful maintenance overheads.
+
+## Primary Analytics Paradigm
+The primary analytical classification of this study is **Predictive Analytics**, supported by foundational Descriptive Analytics and downstream Prescriptive Scenario Modeling.
+
+```
++-----------------------------------------------------------------------------------+
+|                            HostelIQ Analytics Architecture                        |
++-----------------------------------------------------------------------------------+
+|  1. Descriptive Analytics    --> 2. Predictive Analytics   --> 3. Prescriptive    |
+|  - Occupancy Rates               - 2025-26 Bed Demand          Scenario Modeling  |
+|  - Block-wise Distributions        Forecasting                 - Intake Scenarios |
+|  - Waitlist Funnel Analysis      - Holdout Validation (MAE)    - Gap Analysis     |
++-----------------------------------------------------------------------------------+
+```
+
+## Research Question
+> **"Can we predict hostel bed demand for the next academic year using historical hostel applications, student intake, occupancy, and room capacity data?"**
+
+---
+
+# Research Objectives & Scope
+
+1. **Quantify Longitudinal Occupancy Patterns:** Evaluate historical bed allocation, vacancy rates, and waitlist pressures across 8 academic years (2017–18 through 2024–25).
+2. **Diagnose Infrastructure Bottlenecks:** Identify gender-segregated and block-specific pressure points across campus halls of residence.
+3. **Develop Predictive Forecasting Models:**
+   - Establish a **Naïve Persistence / Drift baseline**.
+   - Construct an **Econometric Multiple Linear Regression (MLR)** model evaluating the elasticity of hostel demand with respect to total student intake and outstation student proportions.
+   - Fit an **Univariate Time-Series Exponential Smoothing (Holt’s Linear Trend)** model.
+4. **Out-of-Time Model Validation:** Evaluate competing models using holdout test validation (Academic Years 2023–24 and 2024–25) using Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and Mean Absolute Percentage Error (MAPE).
+5. **Conduct Prescriptive Scenario Analysis:** Simulate hostel bed demand under varying university enrollment trajectories ($\pm 10\%$, $+20\%$) and formulate evidence-based allocation guidelines.
+6. **Cost per Occupied Bed Assessment (Optional):** Quantify operational efficiency per occupied bed under clearly stated financial assumptions.
+
+---
+
+# Data Architecture & Ethical Governance
+
+## Synthetic Data Declaration & Academic Ethics
+> **Notice of Academic Integrity:**  
+> In compliance with student privacy regulations and institutional data protection standards, this project utilizes a **statistically calibrated synthetic dataset**.  
+> - No authentic student Personally Identifiable Information (PII)—such as student names, registration numbers, contact information, or academic transcripts—is collected or stored.  
+> - All synthetic values are algorithmically generated with fixed random seeds for academic reproducibility, reflecting stylized empirical realities of a residential collegiate campus (3,200 beds across 6 residential halls).  
+> - Findings and projections represent an academic methodological demonstration rather than real claims regarding any specific university campus.
+
+## Dataset Schemas & Planned Tables
+
+The analytical pipeline is designed to ingest three relational data tables:
+
+1. **`intake_demographics.csv`:** Longitudinal records of annual university admissions, broken down by undergraduate (UG) intake, postgraduate (PG) intake, and outstation student counts.
+2. **`hostel_inventory.csv`:** Physical infrastructure inventory specifying hostel designations, gender policies, blocks, room categories (Single/Double/Triple), AC status, and bed capacities.
+3. **`annual_hostel_records.csv`:** Annual operational records capturing gross applications, eligible applications, realized bed allocations, waitlisted students, unallocated capacity, and operating costs.
+
+*Detailed variable definitions, data types, units, and integrity constraints are cataloged in [`docs/data_dictionary.md`](docs/data_dictionary.md).*
+
+---
+
+# Data Loading & Environment Setup (Pending Implementation)
+
+*The following code chunk illustrates the planned R package library imports and directory structure setup.*
+
+```{r load-libraries, eval=FALSE}
+# Core Data Wrangling and Visualization
+library(tidyverse)
+library(janitor)
+library(here)
+library(lubridate)
+
+# Modeling and Forecasting
+library(forecast)
+library(broom)
+
+# Academic Reporting and Formatting
+library(knitr)
+library(kableExtra)
+```
+
+---
+
+# Data Integrity Checks & Preprocessing (Planned Section)
+
+*Planned analytical steps:*
+- Verification of foreign key consistency between inventory and annual operational records.
+- Logical assertion: $\text{Allocated Beds} \le \text{Total Bed Capacity}$.
+- Logical assertion: $\text{Eligible Applications} = \text{Allocated Beds} + \text{Waitlisted Students}$.
+- Construction of analytical master table (`master_hostel_analytics`).
+
+```{r data-preprocessing, eval=FALSE}
+# [PHASE 4 PLACEHOLDER]
+# Master table assembly, joins, and data integrity assertion scripts will execute here.
+```
+
+---
+
+# Exploratory Data Analysis & Visualizations (Planned Section)
+
+*Planned analytical outputs:*
+1. **Hostel Occupancy Overview:** Longitudinal trends in total beds, occupied beds, and campus-wide occupancy rates.
+2. **Hostel & Block Level Disaggregation:** Cross-sectional comparisons across Boys Hostels (BH-1, BH-2, BH-3) and Girls Hostels (GH-1, GH-2, GH-3).
+3. **Application Funnel & Unmet Demand:** Breakdown of gross demand $\rightarrow$ eligible demand $\rightarrow$ allocated beds $\rightarrow$ waitlisted students.
+
+```{r exploratory-data-analysis, eval=FALSE}
+# [PHASE 5 PLACEHOLDER]
+# High-resolution ggplot2 visualizations and descriptive tables will execute here.
+```
+
+---
+
+# Predictive Modeling & Demand Forecasting (Planned Section)
+
+## Modeling Methodology & Candidates
+1. **Benchmark Baseline:** Naïve Persistence and Historical Average Drift.
+2. **Econometric Model (OLS Multiple Regression):**
+   $$\text{BedDemand}_t = \beta_0 + \beta_1 \cdot \text{OutstationStudents}_t + \beta_2 \cdot \text{TotalIntake}_t + \epsilon_t$$
+3. **Time-Series Model:** Holt’s Linear Trend Exponential Smoothing (capturing level and growth trend without overfitting small annual samples).
+
+## Time-Aware Validation Setup
+- **Training Set:** Academic Years 2017–18 through 2022–23 ($N=6$).
+- **Test Holdout Set:** Academic Years 2023–24 and 2024–25 ($N=2$).
+- **Metrics:** MAE, RMSE, MAPE.
+
+```{r predictive-forecasting, eval=FALSE}
+# [PHASE 6 PLACEHOLDER]
+# Model training, diagnostic checks, holdout evaluation, and 2025-26 forecasting will execute here.
+```
+
+---
+
+# Capacity Gap & Prescriptive Scenario Analysis (Planned Section)
+
+*Planned analytical outputs:*
+- **Bed Gap Analysis:** Projected 2025–26 Bed Demand vs. Total Operational Physical Capacity.
+- **Scenario Testing:**
+  - *Base Case:* Continuation of historic 4% intake growth trend.
+  - *Conservative Scenario:* 0% intake growth (stagnant enrollment).
+  - *Aggressive Expansion:* $+10\%$ to $+20\%$ intake growth.
+- **Policy & Managerial Recommendations:** Optimal allocation rules, buffer margin policies, and contingency planning.
+
+```{r scenario-analysis, eval=FALSE}
+# [PHASE 7 PLACEHOLDER]
+# Prescriptive scenario projections and bed deficit/surplus matrices will execute here.
+```
+
+---
+
+# Cost per Occupied Bed (Optional Module, Planned Section)
+
+*Planned evaluation:*
+- Annual operating expenditure divided by total occupied beds.
+- Analysis of fixed facility overheads versus variable per-resident costs, subject to explicit synthetic cost assumptions.
+
+```{r financial-analysis, eval=FALSE}
+# [PHASE 7 OPTIONAL PLACEHOLDER]
+# Cost efficiency and operational expenditure metrics will execute here.
+```
+
+---
+
+# Academic Conclusions & Project Summary (Planned Section)
+
+*A final synthesis of analytical findings, model performance comparisons, business takeaways, and research limitations will be documented here upon completion of the implementation phases.*
+
+---
+
+# References & Software Citations
+
+1. Hyndman, R.J., & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice* (3rd ed.). OTexts: Melbourne, Australia.
+2. Wickham, H., et al. (2019). Welcome to the Tidyverse. *Journal of Open Source Software*, 4(43), 1686.
+3. R Core Team (2024). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing, Vienna, Austria.
